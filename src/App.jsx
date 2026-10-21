@@ -22,10 +22,16 @@ export default function Board() {
     setXIsNext(!xIsNext);
   }
 
-  const winner = calculateWinner(squares);
-  const status = winner
-    ? 'Winner: ' + winner
-    : 'Next player: ' + (xIsNext ? 'X' : 'O');
+    const winner = calculateWinner(squares);
+  const isDraw = !winner && squares.every(Boolean);
+  let status;
+  if (winner) {
+    status = 'Winner: ' + winner;
+  } else if (isDraw) {
+    status = "It's a draw";
+  } else {
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+  }
 
   return (
     <>
