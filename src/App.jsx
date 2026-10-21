@@ -65,10 +65,10 @@ function resetGame() {
         <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
       </div>
-      <div style={{ marginTop: 12 }}>
+      <div className="score">
         X: {score.X} | O: {score.O} | Draws: {score.draws}
       </div>
-      <button style={{ marginTop: 8 }} onClick={resetGame}>
+      <button className="new-game" onClick={resetGame}>
         New game
       </button>
     </>
