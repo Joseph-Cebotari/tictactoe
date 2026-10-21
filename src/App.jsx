@@ -12,15 +12,29 @@ export default function Board() {
   const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
 
+  const [score, setScore] = useState({ X: 0, O: 0, draws: 0 });
+
   function handleClick(i) {
-    if (squares[i] || calculateWinner(squares)) {
-      return;
-    }
-    const nextSquares = squares.slice();
-    nextSquares[i] = xIsNext ? 'X' : 'O';
-    setSquares(nextSquares);
-    setXIsNext(!xIsNext);
+  if (squares[i] || calculateWinner(squares)) {
+    return;
   }
+  const nextSquares = squares.slice();
+  nextSquares[i] = xIsNext ? 'X' : 'O';
+  setSquares(nextSquares);
+  setXIsNext(!xIsNext);
+
+  const result = calculateWinner(nextSquares);
+  if (result) {
+    setScore({ ...score, [result]: score[result] + 1 });
+  } else if (nextSquares.every(Boolean)) {
+    setScore({ ...score, draws: score.draws + 1 });
+  }
+}
+
+function resetGame() {
+  setSquares(Array(9).fill(null));
+  setXIsNext(true);
+}
 
     const winner = calculateWinner(squares);
   const isDraw = !winner && squares.every(Boolean);
@@ -51,6 +65,12 @@ export default function Board() {
         <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
       </div>
+      <div style={{ marginTop: 12 }}>
+        X: {score.X} | O: {score.O} | Draws: {score.draws}
+      </div>
+      <button style={{ marginTop: 8 }} onClick={resetGame}>
+        New game
+      </button>
     </>
   );
 }
