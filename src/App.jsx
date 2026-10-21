@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 function Square({ value, onSquareClick }) {
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button className={'square ' + (value === 'X' ? 'x' : value === 'O' ? 'o' : '')} onClick={onSquareClick}>
       {value}
     </button>
   );
